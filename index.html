@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapper</title>
+    <style> body {padding: 0; margin: 0;} </style>
+    <script src="../p5js/p5.min.js"></script>
+    <script src="../p5js/addons/p5.dom.min.js"></script>
+    <script src="../p5js/addons/p5.sound.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script src="Scripts/classes.js"></script>
+    <script src="Scripts/psbc.js"></script>
+    <script src="sketch.js"></script>
+    <script src="actions.js"></script>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css"/>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">My Tools</a>
+      <ul class="nav navbar-nav">
+          <li class="nav-item">
+              <a class="nav-link" href="#">Mapper</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="Viewer/">Viewer</a>
+          </li>
+      </ul>          
+    </nav>    
+
+    <!-- Menu Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <ul class="navbar-nav mr-auto">
+        <button type="button" id="sidebarCollapse" class="btn btn-outline-light">☰</button>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            File
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a id="NewProject" class="dropdown-item" onclick="newProject();">New</a>
+            <a id="LoadProject" class="dropdown-item" data-toggle="modal" data-target="#modal-Open-Project" href="#">Open</a>
+            <a id="SaveProject" class="dropdown-item" onclick="saveProject();">Save</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Project
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a id="AddMap" class="dropdown-item" href="#">Add Map</a>
+            <a id="StartViewer" class="dropdown-item" href="#" onclick="startViewer();">Start Viewer</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Map
+          </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a id="SelectBackground" class="dropdown-item" data-toggle="modal" data-target="#modal-fileUpload">Select Background</a>
+              <a id="MapSettings" class="dropdown-item" href="#">Map Settings</a>
+            </div>
+        </li>
+      </ul>
+    </nav>       
+
+    <!-- Content -->
+    <div class="container-fluid" style="padding-left:0px" oncontextmenu="return false;">
+      <div class="wrapper"style="margin-left: 0; margin-top: 7px;">
+        <!-- Sidebar -->
+        <div id="sidebar">
+          <div id="option group" class="btn-group-vertical btn-group-toggle" data-toggle="buttons" style="width: 100%; height: 33%;">
+            <label id="Draw-Polygon" class="btn btn-secondary text-left">
+              <input type="radio" id="Draw-Polygon-Inp" autocomplete="off">
+                <i class="fas fa-draw-polygon"></i> Polygon
+              </input>
+            </label>
+            <label id="Draw-Rectangle" class="btn btn-secondary text-left active">
+              <input type="radio" id="Draw-Rectangle-Inp" autocomplete="off" checked>
+                <i class="far fa-square"></i> Rectangle
+              </input>
+            </label>
+            <label id="Draw-Free" class="btn btn-secondary text-left">
+              <input type="radio" id="Draw-Free-Inp" autocomplete="off">
+                <i class="fas fa-signature"></i> Free Draw
+              </input>
+            </label>
+            <span class="btn-separator"></span>
+            <label id="Move-Drag" class="btn btn-secondary text-left">
+              <input type="radio" id="Move-Drag-Inp" autocomplete="off">
+              <i class="fas fa-arrows-alt"></i> Drag
+              </input>
+            </label>
+            <span class="btn-separator"></span>
+            <label id="Tool-Select" class="btn btn-secondary text-left disabled">
+              <input type="radio" id="Tool-Select-Inp" autocomplete="off" disabled>
+              <i class="fas fa-hand-pointer"></i> Select
+              </input>
+            </label>
+            <label id="Tool-Distance" class="btn btn-secondary text-left">
+              <input type="radio" id="Tool-Distance-Inp" autocomplete="off">
+              <i class="fas fa-ruler"></i> Distance
+              </input>
+            </label>
+            <label id="Tool-Brush" class="btn btn-secondary text-left disabled">
+              <input type="radio" id="Tool-Brush-Inp" autocomplete="off" disabled>
+              <i class="fas fa-brush"></i> Brush
+              </input>
+            </label>
+          </div>
+
+          <div style="height:64.5%; margin-top:15px; background-color: grey">
+
+          </div>
+        </div>
+        
+        <!-- Canvas -->
+        <div id="content" />
+      </div>
+    </div>
+
+    <!-- File Upload Modal -->
+    <div class="modal fade" id="modal-fileUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Open Image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="fileUpload-Error" class="alert alert-danger" role="alert" style="position:absolute; top:-5000px"></div>
+            <input type="file" id="fileinput" multiple="single" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="uploadFile();">Open</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Download Modal -->
+    <div class="modal fade" id="modal-Open-Project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <form id="loadProjectForm" onsubmit="loadProject();">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Load File</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-Open-Project-Error" class="alert alert-danger" role="alert" style="position:absolute; top:-5000px"></div>
+                <div class="form-row">
+                  <div class="col">
+                    <input id="modal-Open-Project-code" type="text" class="form-control" placeholder="File Code" maxlength="6" minlength="6" required>
+                  </div>
+                  <div class="col">
+                      <input id="modal-Open-Project-pin" type="text" class="form-control" placeholder="PIN" maxlength="4" minlength="4" required>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Load</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- After Definition JS -->
+    <script type="text/javascript">      
+      new ResizeObserver(CanvasSizeChanged).observe(content);
+    </script>
+    
+    <!-- Copy Definitions -->
+    <copy style="position:absolute; top:-5000px">
+        <!-- Filename Alert -->
+      <div id="alert-FileInfos-Copy" class="alert alert-secondary" role="alert" style="position: absolute; top: 0; left: 40%; width: 20%;">
+        <div id="alert-FileInfos-Text"></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"style="position: absolute; right: 8px; top: 5px;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+
+      <!-- Project Saved Alert -->
+    <div id="alert-project-Saved-Copy" class="alert alert-success" role="alert" 
+         style="position: absolute; top: 0; left: 40%; width: 20%;text-align: center">
+      <div id="alert-project-Saved-Text"></div>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"style="position: absolute; right: 8px; top: 5px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    </copy>
+  </body>
+</html>
