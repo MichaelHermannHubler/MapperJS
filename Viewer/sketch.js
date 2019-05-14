@@ -3,10 +3,11 @@ var map;
 
 function setup(){
   let width =  $(window).width();
-  let height = $(window).height() - $("nav").height() - 22;
+  let height = $(window).height() - 6;
   
   canvas = createCanvas(width, height);
   canvas.parent('content');
+  //backgound(0);
   noLoop();
 }
 
@@ -25,6 +26,7 @@ function draw(){
     });
   }else{
     fill(0);
+    strokeWeight(0);
 
     beginShape();
     vertex(0, 0);
@@ -134,4 +136,13 @@ function mouseWheel(event) {
 function mouseDragged(event){  
   map.xOffset += event.movementX / map.zoom;
   map.yOffset += event.movementY / map.zoom;
+}
+
+function CanvasSizeChanged(){
+  if(canvas){
+    let width =  $(window).width();
+    let height = $(window).height() - 6;
+    
+    resizeCanvas(width, height);
+  }
 }

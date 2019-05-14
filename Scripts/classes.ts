@@ -89,6 +89,8 @@
     xOffset: number;
     yOffset: number;
     zoom: number;
+
+    UniqueID: number;
   
     constructor(){
       this.rooms = [];
@@ -97,6 +99,8 @@
       this.xOffset = 0;
       this.yOffset = 0;
       this.zoom = 1;
+
+      this.UniqueID = Math.random();
     }
   }
 

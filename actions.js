@@ -181,7 +181,7 @@ function copyProjectFromJSON(obj){
   project.PIN = obj.PIN;
 
   for(let i = 0; i < obj.maps.length; i++){
-    if(i > 0) project.addMap();
+    if(i > 0) addMap();
 
     project.currentMap().imageSrc = obj.maps[i].imageSrc;
     project.currentMap().showMap = obj.maps[i].showMap;
@@ -200,6 +200,47 @@ function copyProjectFromJSON(obj){
   }
 
   project.selectedIndex = obj.selectedIndex;
+}
+
+function addMap(){
+  project.addMap();
+
+  let node = $('#map-list-Item-Copy')[0].cloneNode(true);
+  node.id = '';
+  node.children[0].children[0].innerHTML = "Map " + project.maps.length;
+  node.classList.add('active');
+
+  let map = project.currentMap();
+  node.children[0].children[1].onclick = function() { removeMap(node, map); };
+  node.onclick = function (){
+    let index = 0;
+    while(node != $('#mapList')[0].children[index]) index++;
+
+    project.selectedIndex = index;
+    img = loadImage(project.currentMap().imageSrc);
+  }
+  $('#mapList .active')[0].classList.remove('active');
+  $('#mapList')[0].appendChild(node);
+  node.click();
+}
+
+function removeMap(node, map){
+  if(!node){
+    node = $('#mapList')[0].children[0];
+    map = project.maps[0];
+  }
+
+  if(project.maps.length > 1){
+    node.remove();
+    if(project.maps.indexOf(map) <= project.selectedIndex){
+      project.selectedIndex--;
+      project.maps.splice(project.maps.indexOf(map), 1);
+    }else{
+      project.maps.splice(project.maps.indexOf(map), 1);
+    }
+    $('#mapList')[0].lastElementChild.classList.add('active');
+    $('#mapList')[0].lastElementChild.click();
+  }
 }
 
 $("#loadProjectForm").submit(function(e) {

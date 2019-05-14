@@ -55,7 +55,7 @@
             Project
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a id="AddMap" class="dropdown-item" href="#">Add Map</a>
+            <a id="AddMap" class="dropdown-item" href="#" onclick="addMap();">Add Map</a>
             <a id="StartViewer" class="dropdown-item" href="#" onclick="startViewer();">Start Viewer</a>
           </div>
         </li>
@@ -116,8 +116,15 @@
             </label>
           </div>
 
-          <div style="height:64.5%; margin-top:15px; background-color: grey">
-
+          <div style="height:64.5%; margin-top:15px; overflow-y:auto">
+            <div class="list-group" id="mapList" role="tablist" style="height:100px; width: 200px">
+              <a class="list-group-item list-group-item-action active" data-toggle="list" href="#home" role="tab">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Map 1</h5>
+                  <small onclick="removeMap();"><i class="far fa-trash-alt"></i></small>
+                </div>
+              </a>              
+            </div>
           </div>
         </div>
         
@@ -182,6 +189,14 @@
     <!-- After Definition JS -->
     <script type="text/javascript">      
       new ResizeObserver(CanvasSizeChanged).observe(content);
+      
+      $('#mapList')[0].children[0].onclick = function (){
+        let index = 0;
+        while($('#mapList')[0].children[0] != $('#mapList')[0].children[index]) index++;
+
+        project.selectedIndex = index;
+        img = loadImage(project.currentMap().imageSrc);
+      }
     </script>
     
     <!-- Copy Definitions -->
@@ -193,6 +208,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
       </div>
+
+      <a id="map-list-Item-Copy" class="list-group-item list-group-item-action" data-toggle="list" href="#home" role="tab">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Map 2</h5>
+          <small><i class="far fa-trash-alt"></i></small>
+        </div>
+      </a>
 
       <!-- Project Saved Alert -->
     <div id="alert-project-Saved-Copy" class="alert alert-success" role="alert" 

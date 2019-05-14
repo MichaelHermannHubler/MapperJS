@@ -29,6 +29,7 @@ function setup() {
   canvas.parent('content');
 
   project = new Project();
+  project.currentMap().imageSrc = './ressources/Images/Sword-Coast-Map_HighRes.jpg';
   
   img = loadImage('./ressources/Images/Sword-Coast-Map_HighRes.jpg');
 }

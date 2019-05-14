@@ -58,6 +58,7 @@ var Map = /** @class */ (function () {
         this.xOffset = 0;
         this.yOffset = 0;
         this.zoom = 1;
+        this.UniqueID = Math.random();
     }
     return Map;
 }());

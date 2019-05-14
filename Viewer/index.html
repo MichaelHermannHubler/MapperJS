@@ -22,27 +22,7 @@
     <link rel="stylesheet" href="../style.css"/>
   </head>
   <body>
-    <!-- Header Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">My Tools</a>
-      <ul class="nav navbar-nav">
-          <li class="nav-item">
-              <a class="nav-link" href="../">Mapper</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Viewer</a>
-          </li>
-      </ul>          
-    </nav>   
-
-    <!-- Content -->
-    <div class="container-fluid" style="padding-left:0px" oncontextmenu="return false;">
-      <div class="wrapper">        
-        <!-- Canvas -->
-        <div id="content"/>
-      </div>
-    </div>
-
+    <div id="content"/>
     
     <!-- File Download Modal -->
     <div class="modal fade" id="modal-Open-Project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -72,6 +52,11 @@
         </form>
     </div>
 
+
+    <!-- After Definition JS -->
+    <script type="text/javascript">      
+      new ResizeObserver(CanvasSizeChanged).observe(content);
+    </script>
     <script src="actions.js"></script>
 
   </body>
