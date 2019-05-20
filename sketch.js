@@ -372,6 +372,8 @@ function sendMap(map){
       return true;
     if($('#modal-fileUpload').hasClass('show'))
       return true;
+    if($('#modal-Settings').hasClass('show'))
+      return true;
     return false;
   }
 
