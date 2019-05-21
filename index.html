@@ -203,7 +203,7 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text">Grid Type:</label>
                   </div>
-                  <select class="form-control">
+                  <select class="form-control" id="map-settigs-grid-type">
                     <option value="none">None</option>
                     <option value="square">Squared</option>
                     <option value="hex">Hexes</option>
@@ -215,7 +215,7 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text">Grid Size:</label>
                   </div>
-                  <input type="range" class="custom-range custom-range-modal" min="0" max="400">
+                  <input type="range" class="custom-range custom-range-modal" id="map-settigs-grid-size" value="50" min="5" max="400">
                 </div>
               </div>
               <div class="row">
@@ -223,7 +223,7 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text">Grid Offset X:</label>
                   </div>
-                  <input type="range" class="custom-range custom-range-modal" min="0" max="400">
+                  <input type="range" class="custom-range custom-range-modal" id="map-settigs-grid-offset-x" value="0" min="0" max="400">
                 </div>
               </div>
               <div class="row">
@@ -231,7 +231,7 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text">Grid Offset Y:</label>
                   </div>
-                  <input type="range" class="custom-range custom-range-modal" min="0" max="400">
+                  <input type="range" class="custom-range custom-range-modal" id="map-settigs-grid-offset-y" value="0" min="0" max="400">
                 </div>
               </div>
               <div class="row">
@@ -239,9 +239,9 @@
                   <div class="input-group-prepend">
                       <label class="input-group-text">Grid Distance:</label>
                   </div>
-                  <input type="number" class="form-control" aria-label="Text input with dropdown button">
+                  <input type="number" class="form-control" id="map-settigs-grid-distance" aria-label="Text input with dropdown button" value="5">
                   <div class="input-group-append">
-                    <select class="form-control">
+                    <select class="form-control" id="map-settigs-grid-unit">
                       <option value="ft">Foot</option>
                       <option value="yd">Yard</option>
                       <option value="m">Meter</option>
@@ -254,25 +254,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- After Definition JS -->
-    <script type="text/javascript">      
-      new ResizeObserver(CanvasSizeChanged).observe(content);
-      
-      $('#mapList')[0].children[0].onclick = function (){
-        let index = 0;
-        while($('#mapList')[0].children[0] != $('#mapList')[0].children[index]) index++;
-
-        project.selectedIndex = index;
-        img = loadImage(project.currentMap().imageSrc);
-      }
-    </script>
     
     <!-- Copy Definitions -->
     <copy style="position:absolute; top:-5000px">

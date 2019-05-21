@@ -5,11 +5,6 @@ window.onbeforeunload = function(){
 }
 
 $(document).ready(function () {
-  $('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
-      $(this).toggleClass('active'); 
-      CanvasSizeChanged();
-  });
 });
 
 function startViewer(){
@@ -189,6 +184,13 @@ function copyProjectFromJSON(obj){
     project.currentMap().yOffset = obj.maps[i].yOffset;
     project.currentMap().zoom = obj.maps[i].zoom;
 
+    project.currentMap().gridSettings.type = obj.maps[i].gridSettings.type;
+    project.currentMap().gridSettings.width = obj.maps[i].gridSettings.width;
+    project.currentMap().gridSettings.offsetX = obj.maps[i].gridSettings.offsetX;
+    project.currentMap().gridSettings.offsetY = obj.maps[i].gridSettings.offsetY;
+    project.currentMap().gridSettings.distance = obj.maps[i].gridSettings.distance;
+    project.currentMap().gridSettings.unit = obj.maps[i].gridSettings.unit;
+
     obj.maps[i].rooms.forEach(room => {
       let newRoom = new Room();
       newRoom.shown = room.shown;
@@ -243,6 +245,52 @@ function removeMap(node, map){
   }
 }
 
-$("#loadProjectForm").submit(function(e) {
-  e.preventDefault();
-});
+$(document).ready(
+  function(){
+    $("#loadProjectForm").submit(function(e) {
+      e.preventDefault();
+    });
+
+    
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+      $(this).toggleClass('active'); 
+      CanvasSizeChanged();
+    });
+
+    new ResizeObserver(CanvasSizeChanged).observe(content);
+      
+    $('#mapList')[0].children[0].onclick = function (){
+      let index = 0;
+      while($('#mapList')[0].children[0] != $('#mapList')[0].children[index]) index++;
+
+      project.selectedIndex = index;
+      img = loadImage(project.currentMap().imageSrc);
+    };
+
+    $('#map-settigs-grid-type').on('change', function(){
+      project.currentMap().gridSettings.type = this.value;
+    });
+
+    $('#map-settigs-grid-size').on('change', function(){
+      project.currentMap().gridSettings.width = Number(this.value);
+    });
+
+    $('#map-settigs-grid-offset-x').on('change', function(){
+      project.currentMap().gridSettings.offsetX = Number(this.value);
+    });
+
+    $('#map-settigs-grid-offset-y').on('change', function(){
+      project.currentMap().gridSettings.offsetY = Number(this.value);
+    });
+
+    $('#map-settigs-grid-distance').on('change', function(){
+      project.currentMap().gridSettings.distance = Number(this.value);
+    });
+
+    $('#map-settigs-grid-unit').on('change', function(){
+      project.currentMap().gridSettings.unit = Number(this.value);
+    });
+  }
+)
+

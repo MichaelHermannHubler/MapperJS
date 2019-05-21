@@ -100,6 +100,8 @@ function draw() {
       });
     }
   }
+
+  drawGrid();
 }
 
 function drawRoomContour(room) {
@@ -175,6 +177,50 @@ function drawCurrentAction(){
           endShape();
         }
         break;
+  }
+}
+
+function drawGrid(){
+  let map = project.currentMap();
+
+  offsetX = map.gridSettings.offsetX % map.gridSettings.width;
+  offsetY = map.gridSettings.offsetY % map.gridSettings.width;
+
+  switch(map.gridSettings.type){
+    case "square":
+      for(let x = offsetX; x < img.width; x += map.gridSettings.width){
+        line(x, 0, x, img.height);
+      }
+      for(let y = offsetY; y < img.height; y += map.gridSettings.width){
+        line(0, y, img.width, y);
+      }
+      break;
+    case "hex":
+      for (let x = offsetX - map.gridSettings.width * 6 / 4; x < img.width; x += map.gridSettings.width * 6 / 4)
+      {
+        for (let y = offsetY - map.gridSettings.width; y < img.height; y += map.gridSettings.width)
+        {
+          noFill();
+          beginShape();
+          vertex(x, y + map.gridSettings.width / 2);
+          vertex(x + map.gridSettings.width / 4, y);
+          vertex(x + map.gridSettings.width * 3 / 4, y);
+          vertex(x + map.gridSettings.width, y + map.gridSettings.width / 2);
+          vertex(x + map.gridSettings.width * 3 / 4, y + map.gridSettings.width);
+          vertex(x + map.gridSettings.width / 4, y + map.gridSettings.width);
+          vertex(x, y + map.gridSettings.width / 2);
+          endShape();
+        }
+      }
+
+      for (let x = offsetX - map.gridSettings.width * 2 / 4; x < img.width; x += map.gridSettings.width * 6 / 4)
+      {
+        for (let y = offsetY - map.gridSettings.width / 2; y < img.height; y += map.gridSettings.width)
+        {
+          line(x, y,  x + map.gridSettings.width / 2, y);
+        }
+      }
+      break;
   }
 }
 

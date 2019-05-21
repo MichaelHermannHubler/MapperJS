@@ -81,6 +81,24 @@
     }
   }
 
+  class Grid{
+    type: string;
+    width: number;
+    offsetX: number;
+    offsetY: number;
+    distance: number;
+    unit: string;
+
+    constructor(){
+      this.type = "none";
+      this.width = 50;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.distance = 5;
+      this.unit = 'ft';
+    }
+  }
+
   class Map{
     rooms: Room[];
     imageSrc: string;
@@ -89,6 +107,8 @@
     xOffset: number;
     yOffset: number;
     zoom: number;
+
+    gridSettings:Grid;
 
     UniqueID: number;
   
@@ -99,6 +119,8 @@
       this.xOffset = 0;
       this.yOffset = 0;
       this.zoom = 1;
+
+      this.gridSettings = new Grid();
 
       this.UniqueID = Math.random();
     }

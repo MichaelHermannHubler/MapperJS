@@ -1,3 +1,4 @@
+"use strict";
 var Point = /** @class */ (function () {
     function Point(X, Y) {
         this.X = X;
@@ -50,6 +51,17 @@ var Room = /** @class */ (function () {
     };
     return Room;
 }());
+var Grid = /** @class */ (function () {
+    function Grid() {
+        this.type = "none";
+        this.width = 50;
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.distance = 5;
+        this.unit = 'ft';
+    }
+    return Grid;
+}());
 var Map = /** @class */ (function () {
     function Map() {
         this.rooms = [];
@@ -58,6 +70,7 @@ var Map = /** @class */ (function () {
         this.xOffset = 0;
         this.yOffset = 0;
         this.zoom = 1;
+        this.gridSettings = new Grid();
         this.UniqueID = Math.random();
     }
     return Map;
