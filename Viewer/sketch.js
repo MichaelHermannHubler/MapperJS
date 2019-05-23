@@ -166,7 +166,6 @@ function copyMapFromJSON(obj){
   map.gridSettings.distance = obj.gridSettings.distance;
   map.gridSettings.unit = obj.gridSettings.unit;
 
-
   map.rooms = [];
   obj.rooms.forEach(room => {
     let newRoom = new Room();
