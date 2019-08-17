@@ -7,7 +7,6 @@ function setup(){
   
   canvas = createCanvas(width, height);
   canvas.parent('content');
-  //backgound(0);
   noLoop();
 }
 
@@ -15,6 +14,7 @@ function draw(){
   if(!img) return;
 
   clear();
+  background(0);
   scale(map.zoom);
   translate(map.xOffset, map.yOffset);
 
@@ -78,6 +78,7 @@ function drawRunningRoom(room) {
 function drawGrid(){
   offsetX = map.gridSettings.offsetX % map.gridSettings.width;
   offsetY = map.gridSettings.offsetY % map.gridSettings.width;
+  strokeWeight(0.5);
 
   switch(map.gridSettings.type){
     case "square":
@@ -141,7 +142,7 @@ function loadMap(key, initial){
 
   setTimeout(() => {
     loadMap(key);
-  }, 1000);
+  }, 5000);
 }
 
 function copyMapFromJSON(obj){
@@ -176,7 +177,7 @@ function copyMapFromJSON(obj){
     map.rooms.push(newRoom);
   });
 
-  if(load) img = loadImage(map.imageSrc);
+  if(load) img = loadImage('../' + map.imageSrc);
 }
 
 function mouseWheel(event) {

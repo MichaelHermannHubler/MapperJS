@@ -29,9 +29,9 @@ function setup() {
   canvas.parent('content');
 
   project = new Project();
-  project.currentMap().imageSrc = './ressources/Images/Sword-Coast-Map_HighRes.jpg';
+  project.currentMap().imageSrc = './ressources/images/Sword-Coast-Map_LowRes.jpg';
   
-  img = loadImage('./ressources/Images/Sword-Coast-Map_HighRes.jpg');
+  img = loadImage('./ressources/images/Sword-Coast-Map_LowRes.jpg');
 }
 
 function CanvasSizeChanged(){
@@ -71,7 +71,7 @@ function draw() {
     drawCurrentAction();
   } else{
     counter++;
-    if(counter % 30 == 0){
+    if(counter % 60 == 0){
       counter = 0; // overflow prevention
       sendMap(map);
     }
